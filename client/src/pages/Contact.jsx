@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 
@@ -8,97 +7,78 @@ const Contact = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        toast.success("Message dispatched safely to our network operators.");
+        toast.success('Message sent successfully.');
         setFormData({ name: '', email: '', message: '' });
     };
 
     return (
-        <div className="w-full bg-[#2B2621] text-[#F4EFEA] min-h-screen pt-24 pb-16">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                
+        <div className="page-shell pt-24 pb-16">
+            <div className="page-container max-w-6xl">
                 <div className="text-center mb-12 space-y-2">
-                    <h1 className="text-4xl font-black tracking-tight uppercase">Contact Core Support</h1>
-                    <p className="text-xs font-black text-[#A32A2A] uppercase tracking-widest">Connect directly with BookIT Operations</p>
+                    <p className="section-eyebrow">Need support?</p>
+                    <h1 className="text-4xl font-black tracking-tight text-[var(--app-text)]">Contact BookIT Support</h1>
+                    <p className="text-sm text-[var(--app-muted)] max-w-2xl mx-auto">Reach our team for booking help, admin questions, or platform assistance.</p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-                    
-                    {/* Information Channels */}
                     <div className="lg:col-span-2 space-y-4">
-                        <div className="bg-[#3D352E] border border-[#A32A2A]/20 p-5 rounded-2xl flex items-start gap-4 shadow-xl">
-                            <Mail className="text-[#A32A2A] shrink-0 mt-1" size={18} />
-                            <div>
-                                <h4 className="text-xs font-black uppercase tracking-wider text-[#F4EFEA]">Network Registry Mail</h4>
-                                <p className="text-xs text-[#F4EFEA]/80 font-mono mt-1">bookit@mail.com</p>
+                        {[
+                            { icon: Mail, title: 'Email', value: 'bookit@mail.com' },
+                            { icon: Phone, title: 'Phone', value: '+91 9876543210' },
+                            { icon: MapPin, title: 'Office', value: 'Surat, Gujarat, India - 394130' }
+                        ].map((item) => (
+                            <div key={item.title} className="panel-surface p-5 flex items-start gap-4">
+                                <item.icon className="text-[var(--app-accent)] shrink-0 mt-1" size={18} />
+                                <div>
+                                    <h4 className="text-xs font-black uppercase tracking-wider text-[var(--app-text)]">{item.title}</h4>
+                                    <p className="text-sm text-[var(--app-muted)] mt-1 leading-6">{item.value}</p>
+                                </div>
                             </div>
-                        </div>
-
-                        <div className="bg-[#3D352E] border border-[#A32A2A]/20 p-5 rounded-2xl flex items-start gap-4 shadow-xl">
-                            <Phone className="text-[#A32A2A] shrink-0 mt-1" size={18} />
-                            <div>
-                                <h4 className="text-xs font-black uppercase tracking-wider text-[#F4EFEA]">Live Helpdesk Router</h4>
-                                <p className="text-xs text-[#F4EFEA]/80 font-mono mt-1">+91 9876543210</p>
-                            </div>
-                        </div>
-
-                        <div className="bg-[#3D352E] border border-[#A32A2A]/20 p-5 rounded-2xl flex items-start gap-4 shadow-xl">
-                            <MapPin className="text-[#A32A2A] shrink-0 mt-1" size={18} />
-                            <div>
-                                <h4 className="text-xs font-black uppercase tracking-wider text-[#F4EFEA]">HQ Cluster Matrix</h4>
-                                <p className="text-xs text-[#F4EFEA]/70 leading-relaxed font-medium mt-1">
-                                    Surat, Gujarat, India - 394130
-                                </p>
-                            </div>
-                        </div>
+                        ))}
                     </div>
 
-                    {/* Interactive Form Desk */}
-                    <div className="lg:col-span-3 bg-[#3D352E] border border-[#A32A2A]/20 p-6 rounded-2xl shadow-2xl">
+                    <div className="lg:col-span-3 panel-surface p-6">
                         <form onSubmit={handleFormSubmit} className="space-y-4">
-                            <div className="space-y-1">
-                                <label className="text-[10px] font-black text-[#8C7A6B] uppercase tracking-widest">Identity Name</label>
-                                <input 
-                                    required 
-                                    type="text" 
+                            <div className="space-y-1.5">
+                                <label className="text-[10px] font-black text-[var(--app-muted)] uppercase tracking-[0.24em]">Name</label>
+                                <input
+                                    required
+                                    type="text"
                                     value={formData.name}
-                                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                                    placeholder="Your Name" 
-                                    className="w-full px-3.5 py-2.5 bg-[#2B2621]/60 border border-[#8C7A6B]/30 rounded-xl text-xs text-[#F4EFEA] focus:border-[#A32A2A] outline-none font-bold placeholder-[#8C7A6B]/50"
+                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                    placeholder="Your name"
+                                    className="input-surface w-full px-4 py-3 text-sm"
                                 />
                             </div>
 
-                            <div className="space-y-1">
-                                <label className="text-[10px] font-black text-[#8C7A6B] uppercase tracking-widest">Return Routing Email</label>
-                                <input 
-                                    required 
-                                    type="email" 
+                            <div className="space-y-1.5">
+                                <label className="text-[10px] font-black text-[var(--app-muted)] uppercase tracking-[0.24em]">Email</label>
+                                <input
+                                    required
+                                    type="email"
                                     value={formData.email}
-                                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                                    placeholder="youremail@domain.com" 
-                                    className="w-full px-3.5 py-2.5 bg-[#2B2621]/60 border border-[#8C7A6B]/30 rounded-xl text-xs text-[#F4EFEA] focus:border-[#A32A2A] outline-none font-mono placeholder-[#8C7A6B]/50"
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                    placeholder="you@example.com"
+                                    className="input-surface w-full px-4 py-3 text-sm"
                                 />
                             </div>
 
-                            <div className="space-y-1">
-                                <label className="text-[10px] font-black text-[#8C7A6B] uppercase tracking-widest">Query Context Payload</label>
-                                <textarea 
-                                    required 
+                            <div className="space-y-1.5">
+                                <label className="text-[10px] font-black text-[var(--app-muted)] uppercase tracking-[0.24em]">Message</label>
+                                <textarea
+                                    required
                                     value={formData.message}
-                                    onChange={(e) => setFormData({...formData, message: e.target.value})}
-                                    placeholder="Describe your operational or transactional support requirements in detail..." 
-                                    className="w-full p-3 bg-[#2B2621]/60 border border-[#8C7A6B]/30 rounded-xl text-xs text-[#F4EFEA] focus:border-[#A32A2A] outline-none h-28 resize-none font-semibold placeholder-[#8C7A6B]/50"
+                                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                    placeholder="Describe your issue or requirement..."
+                                    className="input-surface w-full px-4 py-3 text-sm min-h-32 resize-none"
                                 />
                             </div>
 
-                            <button 
-                                type="submit"
-                                className="w-full py-3 bg-[#F4EFEA] text-[#2B2621] font-black text-xs uppercase tracking-widest rounded-xl flex items-center justify-center gap-2 hover:bg-[#D1D5DB] transition-colors shadow-md"
-                            >
-                                <Send size={12} /> Dispatch Transmission
+                            <button type="submit" className="btn-surface w-full py-3.5 text-xs font-black uppercase tracking-[0.24em] shadow-md">
+                                <Send size={14} /> Send Message
                             </button>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>

@@ -7,7 +7,8 @@ import { toast } from 'react-hot-toast';
 import { 
     Plus, Trash2, X, Coins, Settings, Hourglass, 
     FolderPlus, List, BarChart3, Edit3, Users,
-    Grid, Shield, FileSpreadsheet, Radio, RefreshCw
+    Grid, Shield, FileSpreadsheet, Radio, RefreshCw,
+    Search, CalendarDays, Sparkles
 } from 'lucide-react';
 import { io } from 'socket.io-client';
 import { 
@@ -33,6 +34,9 @@ const AdminDashboard = () => {
     const [activeAnalytics, setActiveAnalytics] = useState(null);
     const [activeSeatMapEvent, setActiveSeatMapEvent] = useState(null);
     const [selectedSeatDetails, setSelectedSeatDetails] = useState(null);
+    const [activeView, setActiveView] = useState('overview');
+    const [eventSearch, setEventSearch] = useState('');
+    const [statusFilter, setStatusFilter] = useState('All');
 
     const [formData, setFormData] = useState({
         title: '', description: '', date: '', time: '18:00', location: '', 
@@ -216,38 +220,78 @@ useEffect(() => {
         toast.success('CSV metrics spreadsheet compiled.');
     };
 
+    const visibleEvents = events.filter((evt) => {
+        const matchesSearch = evt.title.toLowerCase().includes(eventSearch.toLowerCase()) || evt.location.toLowerCase().includes(eventSearch.toLowerCase());
+        const matchesStatus = statusFilter === 'All' || evt.status === statusFilter;
+        return matchesSearch && matchesStatus;
+    });
+
+    const selectedDateLabel = formData.date
+        ? new Date(formData.date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })
+        : 'Select an event date';
+
     if (loading) return (
-        <div className="w-full bg-[#2B2621] min-h-screen flex items-center justify-center">
-            <div className="text-center text-[#F4EFEA]/80">
-                <RefreshCw className="animate-spin text-[#8C7A6B] mx-auto mb-3" size={24} />
+        <div className="page-shell min-h-screen flex items-center justify-center">
+            <div className="text-center text-[var(--app-muted)]">
+                <RefreshCw className="animate-spin text-[var(--app-accent)] mx-auto mb-3" size={24} />
                 <p className="text-xs font-bold uppercase tracking-widest">Syncing operations workspace...</p>
             </div>
         </div>
     );
 
     return (
-        <div className="w-full bg-[#2B2621] text-[#F4EFEA] transition-colors duration-300 min-h-screen pt-24 pb-16">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="page-shell pt-24 pb-16">
+            <div className="page-container space-y-8">
                 
-                {/* Header Command Card */}
-                <div className="bg-[#3D352E] rounded-2xl p-6 sm:p-8 border border-[#A32A2A]/40 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-                    <div>
-                        <div className="flex items-center gap-2 text-[#A32A2A] font-black tracking-widest text-[10px] uppercase mb-1">
-                            <Shield size={14} /> Admin Command Center
+                <div className="panel-surface p-6 sm:p-8 flex flex-col gap-6">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                        <div>
+                            <div className="flex items-center gap-2 text-[var(--app-accent)] font-black tracking-widest text-[10px] uppercase mb-1">
+                                <Shield size={14} /> Admin Command Center
+                            </div>
+                            <h1 className="text-2xl sm:text-3xl font-black tracking-wide uppercase text-[var(--app-text)]">Administrative Operations Deck</h1>
+                            <p className="mt-2 text-sm text-[var(--app-muted)] max-w-2xl">Manage events, monitor booking health, and jump quickly between analytics, inventory, and publishing workflows.</p>
                         </div>
-                        <h1 className="text-2xl sm:text-3xl font-black tracking-wide uppercase">Administrative Operations Deck</h1>
+                        <button
+                            onClick={() => { setShowEventForm(!showEventForm); if(showEventForm) resetForm(); setActiveView('create'); }}
+                            className="btn-surface w-full md:w-auto px-5 py-3 text-xs font-black uppercase tracking-[0.22em] shadow-md"
+                        >
+                            {showEventForm ? <><X size={14} /> Close Editor</> : <><Plus size={14} /> New Event</>}
+                        </button>
                     </div>
-                    <button
-                        onClick={() => { setShowEventForm(!showEventForm); if(showEventForm) resetForm(); }}
-                        className="w-full md:w-auto px-5 py-2.5 bg-[#F4EFEA] text-[#2B2621] hover:bg-[#D1D5DB] transition-all rounded-xl flex items-center justify-center gap-1.5 font-black text-xs uppercase tracking-wider shadow-md"
-                    >
-                        {showEventForm ? <><X size={14} /> Dismiss Shell</> : <><Plus size={14} /> Inject New Event</>}
-                    </button>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            {[
+                                { id: 'overview', label: 'Overview', icon: Sparkles },
+                                { id: 'inventory', label: 'Inventory', icon: List },
+                                { id: 'create', label: 'Create / Edit', icon: FolderPlus }
+                            ].map((item) => (
+                                <button
+                                    key={item.id}
+                                    type="button"
+                                    onClick={() => setActiveView(item.id)}
+                                    className={`rounded-2xl border px-4 py-4 text-left transition-all ${activeView === item.id ? 'bg-[var(--app-button)] text-[var(--app-button-text)] border-transparent shadow-md' : 'bg-[var(--app-surface)]/50 text-[var(--app-text)] border-[color:var(--app-border)] hover:bg-[var(--app-surface)]'}`}
+                                >
+                                    <item.icon size={16} className="mb-3" />
+                                    <div className="text-sm font-black uppercase tracking-[0.18em]">{item.label}</div>
+                                </button>
+                            ))}
+                        </div>
+                        <div className="rounded-2xl border border-[color:var(--app-border)] bg-[var(--app-bg)]/50 p-4 flex items-start gap-3">
+                            <CalendarDays className="text-[var(--app-accent)] mt-1" size={18} />
+                            <div>
+                                <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[var(--app-accent)]">Selected date</p>
+                                <p className="text-base font-bold text-[var(--app-text)] mt-1">{selectedDateLabel}</p>
+                                <p className="text-sm text-[var(--app-muted)] mt-1">You can use the create event form below to choose event date and time with a cleaner layout.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* System Telemetry Cards Module */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div className="bg-[#3D352E] p-5 rounded-2xl border border-[#8C7A6B]/30 shadow-xl flex items-center justify-between">
+                    <div className="panel-surface p-5 flex items-center justify-between">
                         <div>
                             <span className="text-[10px] font-bold text-[#8C7A6B] block uppercase tracking-widest mb-0.5">Gross Managed Capital</span>
                             <h3 className="text-2xl font-black font-mono text-[#F4EFEA]">₹{bookings.reduce((sum, b) => b.paymentStatus === 'paid' ? sum + b.amount : sum, 0)}</h3>
@@ -280,14 +324,14 @@ useEffect(() => {
                 </div>
 
                 {/* Event Creation Form */}
-                {showEventForm && (
+                {(showEventForm || activeView === 'create') && (
                     <motion.div 
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="bg-[#3D352E] p-6 sm:p-8 rounded-2xl border border-[#8C7A6B]/30 shadow-xl"
+                        className="panel-surface p-6 sm:p-8"
                     >
-                        <h2 className="text-base font-black mb-6 text-[#F4EFEA] flex items-center gap-2 border-b border-[#8C7A6B]/20 pb-3 uppercase tracking-wide">
-                            <FolderPlus size={18} className="text-[#8C7A6B]" /> 
+                        <h2 className="text-base font-black mb-6 text-[var(--app-text)] flex items-center gap-2 border-b border-[color:var(--app-border)] pb-3 uppercase tracking-wide">
+                            <FolderPlus size={18} className="text-[var(--app-accent)]" /> 
                             {editingEventId ? "Modify Target Event Parameters" : "Publish New Curated Experience Node"}
                         </h2>
                         <form onSubmit={handleCreateOrUpdateEvent} className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -299,13 +343,24 @@ useEffect(() => {
                                 <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-wider">Category Classification</label>
                                 <input required type="text" className="w-full px-3.5 py-2.5 bg-[#2B2621]/60 border border-[#8C7A6B]/30 rounded-xl text-sm focus:outline-none text-[#F4EFEA]" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })} />
                             </div>
-                            <div className="flex flex-col gap-1">
-                                <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-wider">Calendar Node Date</label>
-                                <input required type="date" className="w-full px-3.5 py-2.5 bg-[#2B2621]/60 border border-[#8C7A6B]/30 rounded-xl text-sm focus:outline-none text-[#8C7A6B]" value={formData.date} onChange={e => setFormData({ ...formData, date: e.target.value })} />
-                            </div>
-                            <div className="flex flex-col gap-1">
-                                <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-wider">Execution Time Clock</label>
-                                <input required type="time" className="w-full px-3.5 py-2.5 bg-[#2B2621]/60 border border-[#8C7A6B]/30 rounded-xl text-sm focus:outline-none text-[#8C7A6B]" value={formData.time} onChange={e => setFormData({ ...formData, time: e.target.value })} />
+                            <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-[1fr_220px] gap-4 rounded-2xl border border-[color:var(--app-border)] bg-[var(--app-bg)]/45 p-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div className="flex flex-col gap-1">
+                                        <label className="text-[10px] font-bold text-[var(--app-accent)] uppercase tracking-wider">Event Date</label>
+                                        <input required type="date" className="input-surface w-full px-3.5 py-2.5 text-sm" value={formData.date} onChange={e => setFormData({ ...formData, date: e.target.value })} />
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        <label className="text-[10px] font-bold text-[var(--app-accent)] uppercase tracking-wider">Event Time</label>
+                                        <input required type="time" className="input-surface w-full px-3.5 py-2.5 text-sm" value={formData.time} onChange={e => setFormData({ ...formData, time: e.target.value })} />
+                                    </div>
+                                </div>
+                                <div className="rounded-2xl border border-[color:var(--app-border)] bg-[var(--app-surface)]/70 p-4 flex flex-col justify-between">
+                                    <div>
+                                        <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[var(--app-accent)]">Date preview</p>
+                                        <p className="mt-2 text-lg font-black text-[var(--app-text)]">{selectedDateLabel}</p>
+                                    </div>
+                                    <p className="mt-3 text-xs text-[var(--app-muted)]">Choose a clean schedule for your attendees.</p>
+                                </div>
                             </div>
                             <div className="flex flex-col gap-1">
                                 <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-wider">Physical Venue Location</label>
@@ -350,11 +405,34 @@ useEffect(() => {
                 )}
 
                 {/* Experience Inventory Ledger */}
-                <div className="bg-[#3D352E] rounded-2xl shadow-xl border border-[#8C7A6B]/30 overflow-hidden">
-                    <div className="p-4 bg-[#2B2621]/40 border-b border-[#8C7A6B]/20 flex justify-between items-center">
-                        <h3 className="text-[10px] font-black uppercase tracking-widest text-[#8C7A6B] flex items-center gap-2">
-                            <List size={14} /> Experience Inventory Manifest ({events.length})
-                        </h3>
+                <div className="panel-surface overflow-hidden">
+                    <div className="p-4 border-b border-[color:var(--app-border)] flex flex-col gap-4">
+                        <div className="flex justify-between items-center">
+                            <h3 className="text-[10px] font-black uppercase tracking-widest text-[var(--app-accent)] flex items-center gap-2">
+                                <List size={14} /> Experience Inventory Manifest ({visibleEvents.length})
+                            </h3>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-[1fr_180px_140px] gap-3">
+                            <div className="relative">
+                                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--app-muted)]" />
+                                <input
+                                    type="text"
+                                    value={eventSearch}
+                                    onChange={(e) => setEventSearch(e.target.value)}
+                                    placeholder="Search events or locations..."
+                                    className="input-surface w-full pl-9 pr-3 py-2.5 text-sm"
+                                />
+                            </div>
+                            <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="input-surface px-3 py-2.5 text-sm">
+                                <option value="All">All status</option>
+                                <option value="Active">Active</option>
+                                <option value="Cancelled">Cancelled</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                            <button type="button" onClick={fetchData} className="btn-surface-secondary text-sm font-semibold">
+                                <RefreshCw size={14} /> Refresh
+                            </button>
+                        </div>
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse text-xs">
@@ -369,10 +447,10 @@ useEffect(() => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-[#8C7A6B]/20 font-semibold text-[#D1D5DB]">
-                                {events.length === 0 ? (
-                                    <tr><td colSpan="6" className="p-8 text-center text-[#8C7A6B] font-bold uppercase tracking-wider">Inventory collections empty.</td></tr>
+                                {visibleEvents.length === 0 ? (
+                                    <tr><td colSpan="6" className="p-8 text-center text-[var(--app-muted)] font-bold uppercase tracking-wider">No events match the current filters.</td></tr>
                                 ) : (
-                                    events.map(evt => {
+                                    visibleEvents.map(evt => {
                                         const bookedCount = evt.seatMapLayout ? evt.seatMapLayout.filter(s => s.status === 'Booked').length : 0;
                                         return (
                                             <tr key={evt._id} className={`transition-colors ${evt.status === 'Cancelled' ? 'bg-[#2B2621]/20 opacity-50' : 'hover:bg-[#2B2621]/40'}`}>

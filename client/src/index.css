@@ -103,6 +103,58 @@ h1, h2, h3, h4, h5, h6 {
    COMPONENT ARCHITECTURE LAYER
    ============================================================ */
 @layer components {
+  .page-shell {
+    @apply w-full min-h-screen transition-colors duration-300;
+    background: var(--app-bg);
+    color: var(--app-text);
+  }
+
+  .page-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .panel-surface {
+    background: color-mix(in srgb, var(--app-surface) 94%, transparent);
+    border: 1px solid var(--app-border);
+    color: var(--app-text);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    @apply rounded-2xl backdrop-blur-sm;
+  }
+
+  .input-surface {
+    background: color-mix(in srgb, var(--app-bg) 72%, var(--app-surface) 28%);
+    border: 1px solid var(--app-border);
+    color: var(--app-text);
+    @apply rounded-xl outline-none transition-all duration-200;
+  }
+
+  .input-surface::placeholder {
+    color: var(--app-muted);
+  }
+
+  .input-surface:focus {
+    border-color: var(--app-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--app-accent) 20%, transparent);
+  }
+
+  .btn-surface {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 active:scale-[0.98];
+    background: var(--app-button);
+    color: var(--app-button-text);
+  }
+
+  .btn-surface-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 active:scale-[0.98];
+    background: color-mix(in srgb, var(--app-surface) 88%, transparent);
+    color: var(--app-text);
+    border: 1px solid var(--app-border);
+  }
+
+  .section-eyebrow {
+    @apply text-[10px] font-black uppercase tracking-[0.28em];
+    color: var(--app-accent);
+  }
+
   /* Dynamic Premium Button Core Blueprint */
   .btn-premium {
     @apply inline-flex items-center justify-center gap-2 font-semibold transition-all duration-300 cursor-pointer select-none active:scale-95;
