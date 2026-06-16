@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   BOOKIT HIGH-END EARTHY DESIGN SYSTEM — CUSTOM TOKENS
+   ============================================================ */
+:root {
+  --color-canvas-bg: #F7F0E8;
+  --color-card-bg: #FFF8F1;
+  --color-brand-primary: #A32A2A;
+  --color-text-main: #2B2621;
+  --color-border-muted: rgba(93, 78, 66, 0.18);
+
+  --app-bg: #F7F0E8;
+  --app-surface: #FFF8F1;
+  --app-surface-soft: #EFE3D6;
+  --app-text: #2B2621;
+  --app-muted: #6E6257;
+  --app-border: rgba(93, 78, 66, 0.18);
+  --app-input: #FFF8F1;
+  --app-button: #2B2621;
+  --app-button-text: #F7F0E8;
+  --app-accent: #A32A2A;
+
+  /* Status Configurations */
+  --color-success:        #15803d;
+  --color-warning:        #b45309;
+  --color-danger:         #991b0f;
+  --color-info:           #1d4ed8;
+
+  /* Typography Infrastructure */
+  --font-primary:         'Poppins', sans-serif;
+  --font-secondary:       'Inter', sans-serif;
+
+  /* Geometric Curves */
+  --radius-sm:            8px;
+  --radius-md:            12px;
+  --radius-lg:            16px;
+  --radius-xl:            20px;
+  --radius-2xl:           24px;
+}
+
+html.dark {
+  --color-canvas-bg: #2B2621;
+  --color-card-bg: #3D352E;
+  --color-brand-primary: #A32A2A;
+  --color-text-main: #F4EFEA;
+  --color-border-muted: rgba(140, 122, 107, 0.3);
+
+  --app-bg: #2B2621;
+  --app-surface: #3D352E;
+  --app-surface-soft: #4A4037;
+  --app-text: #F4EFEA;
+  --app-muted: #CBBFB4;
+  --app-border: rgba(140, 122, 107, 0.3);
+  --app-input: #2F2823;
+  --app-button: #F4EFEA;
+  --app-button-text: #2B2621;
+  --app-accent: #8C7A6B;
+}
+
+/* ============================================================
+   CORE SYSTEM BASE RESETS
+   ============================================================ */
+body {
+  margin: 0;
+  font-family: var(--font-secondary);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text-main);
+  background-color: var(--color-canvas-bg);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  color: var(--color-text-main);
+  font-weight: 700;
+}
+
+/* Custom Fine Scrollbar matching the Vintage Palette */
+::-webkit-scrollbar { 
+  width: 8px; 
+  height: 8px; 
+}
+::-webkit-scrollbar-track { 
+  background: var(--color-canvas-bg); 
+}
+::-webkit-scrollbar-thumb { 
+  background: var(--color-card-bg); 
+  border-radius: 999px;
+  border: 2px solid var(--color-canvas-bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-muted);
+}
+
+/* ============================================================
+   COMPONENT ARCHITECTURE LAYER
+   ============================================================ */
+@layer components {
+  /* Dynamic Premium Button Core Blueprint */
+  .btn-premium {
+    @apply inline-flex items-center justify-center gap-2 font-semibold transition-all duration-300 cursor-pointer select-none active:scale-95;
+    font-family: var(--font-primary);
+    border-radius: var(--radius-md);
+  }
+
+  .btn-premium-primary {
+    @apply btn-premium px-6 py-3 text-sm tracking-wide shadow-md text-[var(--color-canvas-bg)] bg-[var(--color-text-main)] border border-[var(--color-border-muted)];
+  }
+  .btn-premium-primary:hover {
+    @apply text-[var(--color-text-main)] bg-[var(--color-brand-primary)] -translate-y-0.5;
+    box-shadow: 0 10px 20px rgba(163, 42, 42, 0.3);
+  }
+
+  .btn-premium-accent {
+    @apply btn-premium px-6 py-3 text-sm text-white tracking-wide shadow-md bg-[var(--color-brand-primary)];
+  }
+  .btn-premium-accent:hover {
+    @apply opacity-95 -translate-y-0.5;
+    box-shadow: 0 10px 20px rgba(163, 42, 42, 0.4);
+  }
+
+  .btn-premium-secondary {
+    @apply btn-premium px-6 py-3 text-sm text-[var(--color-text-main)] bg-transparent border-2 border-[var(--color-text-main)];
+  }
+  .btn-premium-secondary:hover {
+    @apply bg-[var(--color-text-main)] text-[var(--color-canvas-bg)];
+  }
+
+  /* Architectural Layout Cards */
+  .card-premium {
+    background: var(--color-card-bg);
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(140, 122, 107, 0.3);
+    box-shadow: 0 10px 30px rgba(43, 38, 33, 0.3);
+    @apply transition-all duration-300;
+  }
+  .card-premium:hover {
+    @apply -translate-y-1.5;
+    box-shadow: 0 20px 40px rgba(43, 38, 33, 0.5);
+  }
+
+  /* Premium Form Controls */
+  .input-premium {
+    @apply w-full px-4 py-3 outline-none transition-all duration-200 border text-sm text-[var(--color-text-main)] bg-[var(--color-canvas-bg)]/60 border-[var(--color-border-muted)]/40;
+    border-radius: var(--radius-md);
+  }
+  .input-premium:focus {
+    @apply bg-[var(--color-card-bg)] border-[var(--color-brand-primary)];
+    box-shadow: 0 0 0 3px rgba(163, 42, 42, 0.25);
+  }
+
+  /* Modern Premium Badges */
+  .badge-premium {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider;
+  }
+
+  /* Dashboard Framework Components */
+  .panel-sidebar-item {
+    @apply flex items-center gap-3.5 px-4 py-3.5 rounded-xl font-medium text-sm transition-all duration-200 w-full text-left cursor-pointer text-[var(--color-text-main)]/80;
+  }
+  .panel-sidebar-item:hover, .panel-sidebar-item.active {
+    @apply bg-[var(--color-brand-primary)] text-[var(--color-text-main)] font-semibold;
+  }
+
+  /* Structural Data Presentation Table */
+  .premium-table-container {
+    @apply w-full overflow-x-auto rounded-xl border border-[var(--color-border-muted)]/30 bg-[var(--color-card-bg)] shadow-xl;
+  }
+  .premium-table {
+    @apply w-full text-sm text-left border-collapse;
+  }
+  .premium-table th {
+    @apply px-5 py-4 font-bold uppercase text-xs tracking-wider bg-[var(--color-canvas-bg)]/80 text-[var(--color-text-main)];
+    border-bottom: 2px solid rgba(140, 122, 107, 0.3);
+  }
+  .premium-table td {
+    @apply px-5 py-4 text-[var(--color-text-main)]/90 border-b border-[var(--color-border-muted)]/20;
+  }
+  .premium-table tr:last-child td { 
+    @apply border-b-0; 
+  }
+  .premium-table tr:hover td { 
+    @apply bg-[var(--color-canvas-bg)]/40; 
+  }
+}
