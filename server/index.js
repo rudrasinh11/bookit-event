@@ -13,13 +13,24 @@ const app = express();
 
 const allowedOrigins = [
   'https://bookit-event.vercel.app',
+  'https://bookit-event-delta.vercel.app',
   'http://localhost:5173',
   'http://localhost:3000'
 ];
 
+const allowedOriginPatterns = [
+  /^https:\/\/bookit-event(?:-[a-z0-9-]+)?\.vercel\.app$/i
+];
+
+const isOriginAllowed = (origin) => {
+  if (!origin) return true;
+  if (allowedOrigins.includes(origin)) return true;
+  return allowedOriginPatterns.some((pattern) => pattern.test(origin));
+};
+
 const corsOptions = {
   origin(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (isOriginAllowed(origin)) {
       return callback(null, true);
     }
     return callback(new Error(`CORS blocked for origin: ${origin}`));
@@ -32,7 +43,7 @@ const corsOptions = {
 app.use((req, res, next) => {
   const origin = req.headers.origin;
 
-  if (origin && allowedOrigins.includes(origin)) {
+  if (origin && isOriginAllowed(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
     res.header('Vary', 'Origin');
   }

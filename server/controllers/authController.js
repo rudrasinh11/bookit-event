@@ -11,6 +11,9 @@ const ADMIN_EMAILS = process.env.ADMIN_EMAILS
 const generateOTP = () =>
     Math.floor(100000 + Math.random() * 900000).toString();
 
+const escapeRegex = (value = '') => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const emailQuery = (email = '') => ({ email: new RegExp(`^${escapeRegex(email.trim())}$`, 'i') });
+
 const generateAccessToken = (id, role) => {
     return jwt.sign(
         { id, role },
@@ -31,7 +34,8 @@ const generateRefreshToken = (id, role) => {
 exports.register = async (req, res) => {
     try {
         const { name, email, password } = req.body;
-        let user = await User.findOne({ email });
+        const normalizedEmail = email.toLowerCase().trim();
+        let user = await User.findOne(emailQuery(normalizedEmail));
 
         if (user) {
             return res.status(400).json({ message: 'User already exists' });
@@ -39,11 +43,11 @@ exports.register = async (req, res) => {
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        const userRole = ADMIN_EMAILS.includes(email.toLowerCase()) ? 'admin' : 'user';
+        const userRole = ADMIN_EMAILS.includes(normalizedEmail) ? 'admin' : 'user';
 
         user = await User.create({
             name,
-            email,
+            email: normalizedEmail,
             password: hashedPassword,
             role: userRole,
             isVerified: false
@@ -52,13 +56,13 @@ exports.register = async (req, res) => {
         const otp = generateOTP();
 
         await OTP.create({
-            email,
+            email: normalizedEmail,
             otp,
             action: 'account_verification'
         });
 
         // Explicitly await execution delivery so the lambda container stays open
-        await sendOTPEmail(email, otp, 'account_verification');
+        await sendOTPEmail(normalizedEmail, otp, 'account_verification');
 
         return res.status(201).json({
             message: 'OTP sent to email. Please verify.',
@@ -77,7 +81,8 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await User.findOne({ email });
+        const normalizedEmail = email.toLowerCase().trim();
+        const user = await User.findOne(emailQuery(normalizedEmail));
 
         if (!user) {
             return res.status(400).json({ message: 'Invalid credentials' });
@@ -142,9 +147,10 @@ exports.login = async (req, res) => {
 exports.verifyOTP = async (req, res) => {
     try {
         const { email, otp } = req.body;
+        const normalizedEmail = email.toLowerCase().trim();
 
         const validOTP = await OTP.findOne({
-            email,
+            ...emailQuery(normalizedEmail),
             otp,
             action: 'account_verification'
         });
@@ -154,8 +160,8 @@ exports.verifyOTP = async (req, res) => {
         }
 
         const user = await User.findOneAndUpdate(
-            { email },
-            { isVerified: true },
+            emailQuery(normalizedEmail),
+            { isVerified: true, email: normalizedEmail },
             { new: true }
         );
 
