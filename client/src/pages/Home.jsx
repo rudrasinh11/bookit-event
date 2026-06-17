@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../utils/axios';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-    Calendar, MapPin, Search, Clock, ShieldCheck, 
+import {
+    Calendar, MapPin, Search, Clock, ShieldCheck,
     ArrowRight, Layers, Sparkles, AlertCircle, SlidersHorizontal, ChevronDown
 } from 'lucide-react';
 
@@ -40,14 +40,14 @@ const Home = () => {
                     sortBy
                 }
             });
-            
+
             let refinedData = data || [];
             if (search.trim() !== '') {
                 refinedData = refinedData.filter((event) =>
                     event.title?.toLowerCase().includes(search.toLowerCase())
                 );
             }
-            
+
             setEvents(refinedData);
         } catch (error) {
             console.error('Error fetching optimized events catalog:', error);
@@ -67,31 +67,34 @@ const Home = () => {
     ];
 
     return (
-        <div className="w-full bg-[var(--app-bg)] text-[var(--app-text)] transition-colors duration-300 min-h-screen pt-12">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                
-                {/* Immersive Vintage Hero Frame */}
-                <div className="relative rounded-3xl overflow-hidden mb-12 shadow-2xl border border-[color:var(--app-border)] bg-[var(--app-surface)]/40">
+        <div className="page-shell pt-12">
+            <div className="page-container py-8">
+
+                {/* Hero */}
+                <div className="relative rounded-3xl overflow-hidden mb-12 shadow-2xl border border-[color:var(--app-border)] bg-[var(--app-surface)]/50">
                     <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=3000&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay sepia" />
                     <div
                         className="absolute inset-0"
-                        style={{ background: 'linear-gradient(to top, var(--app-bg), rgba(43, 38, 33, 0.35), transparent)' }}
+                        style={{ background: 'linear-gradient(to top, var(--app-bg), rgba(18,18,18,0.20), transparent)' }}
                     />
-                    
+
                     <div className="relative z-10 px-4 py-12 sm:px-6 sm:py-16 md:p-20 text-center max-w-4xl mx-auto flex flex-col items-center overflow-hidden">
                         <span className="inline-flex items-center gap-1.5 bg-[var(--app-surface)]/90 text-[var(--app-muted)] border border-[color:var(--app-border)] px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase mb-6 backdrop-blur-md">
                             <Sparkles size={12} className="text-[var(--app-accent)] animate-pulse" /> Reimagining Experiences
                         </span>
+
                         <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-[var(--app-text)] mb-6 leading-[1.1] tracking-tight max-w-3xl break-words">
                             <span className="block">Your Elite Events</span>
-                            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[var(--app-text)] via-[var(--app-accent)] to-[var(--app-muted)]">One Singular Click Away</span>
+                            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[var(--app-text)] via-[var(--app-accent)] to-[var(--app-brand)]">
+                                One Singular Click Away
+                            </span>
                         </h1>
-                        <p className="text-[color:var(--app-muted)] text-sm md:text-base mb-8 max-w-xl font-medium leading-relaxed px-1">
+
+                        <p className="text-[var(--app-muted)] text-sm md:text-base mb-8 max-w-xl font-medium leading-relaxed px-1">
                             Discover and guarantee secure passage to world-class enterprise technology summits, premier live performance productions, and intensive design accelerators.
                         </p>
 
-                        {/* Omnibar Input Interface */}
-                        <div className="w-full max-w-xl bg-[var(--app-surface)]/80 p-2 rounded-2xl shadow-2xl flex flex-col sm:flex-row items-center gap-2 border border-[color:var(--app-border)] backdrop-blur-md">
+                        <div className="w-full max-w-xl bg-[var(--app-surface)]/85 p-2 rounded-2xl shadow-2xl flex flex-col sm:flex-row items-center gap-2 border border-[color:var(--app-border)] backdrop-blur-md">
                             <div className="w-full flex items-center pl-3 gap-2.5 py-1.5 sm:py-0">
                                 <Search className="text-[var(--app-accent)] shrink-0" size={16} />
                                 <input
@@ -109,20 +112,24 @@ const Home = () => {
                     </div>
                 </div>
 
-                {/* Categories Matrix Selector */}
+                {/* Categories */}
                 <div className="mb-8">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-2 text-[var(--app-text)]/80">
                             <Layers size={14} className="text-[var(--app-brand)]" />
                             <h3 className="text-[10px] font-bold uppercase tracking-widest">Curated Classifications</h3>
                         </div>
-                        <button 
+
+                        <button
                             onClick={() => setShowAdvanced(!showAdvanced)}
                             className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-[color:var(--app-border)] bg-[var(--app-surface)]/30 text-[10px] font-bold uppercase tracking-widest text-[var(--app-muted)] hover:text-[var(--app-text)] transition-all shadow-sm"
                         >
-                            <SlidersHorizontal size={12} /> Filter Engine <ChevronDown size={12} className={`transition-transform duration-200 ${showAdvanced ? 'rotate-180' : ''}`} />
+                            <SlidersHorizontal size={12} />
+                            Filter Engine
+                            <ChevronDown size={12} className={`transition-transform duration-200 ${showAdvanced ? 'rotate-180' : ''}`} />
                         </button>
                     </div>
+
                     <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
                         {categories.map((cat) => (
                             <button
@@ -140,7 +147,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                {/* Advanced Filter Control Hub */}
+                {/* Advanced Filters */}
                 <AnimatePresence>
                     {showAdvanced && (
                         <motion.div
@@ -152,37 +159,40 @@ const Home = () => {
                             <div className="panel-surface p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                                 <div className="flex flex-col gap-1">
                                     <label className="text-[9px] font-bold text-[var(--app-brand)] uppercase tracking-widest">Target Venue / City</label>
-                                    <input 
-                                        type="text" 
+                                    <input
+                                        type="text"
                                         placeholder="e.g. Mumbai, Bangalore"
                                         value={city}
                                         onChange={(e) => setCity(e.target.value)}
                                         className="input-surface w-full px-3 py-2 text-xs font-medium"
                                     />
                                 </div>
+
                                 <div className="flex flex-col gap-1">
                                     <label className="text-[9px] font-bold text-[var(--app-brand)] uppercase tracking-widest">Price Ceiling Limit (₹)</label>
-                                    <input 
-                                        type="number" 
+                                    <input
+                                        type="number"
                                         placeholder="Maximum budget threshold"
                                         value={maxPrice}
                                         onChange={(e) => setMaxPrice(e.target.value)}
                                         className="input-surface w-full px-3 py-2 text-xs font-medium"
                                     />
                                 </div>
+
                                 <div className="flex flex-col gap-1">
                                     <label className="text-[9px] font-bold text-[var(--app-brand)] uppercase tracking-widest">Calendar Date Target</label>
-                                    <input 
-                                        type="date" 
+                                    <input
+                                        type="date"
                                         value={dateFilter}
                                         onChange={(e) => setDateFilter(e.target.value)}
                                         className="input-surface w-full px-3 py-2 text-xs font-medium"
                                     />
                                 </div>
+
                                 <div className="flex flex-col gap-1">
                                     <label className="text-[9px] font-bold text-[var(--app-brand)] uppercase tracking-widest">Prioritize Sorting Order</label>
-                                    <select 
-                                        value={sortBy} 
+                                    <select
+                                        value={sortBy}
                                         onChange={(e) => setSortBy(e.target.value)}
                                         className="input-surface w-full px-3 py-2 text-xs font-bold"
                                     >
@@ -198,58 +208,74 @@ const Home = () => {
                     )}
                 </AnimatePresence>
 
-                {/* Core Proposition Cards */}
+                {/* Feature Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
                     <div className="panel-surface p-6 shadow-md">
                         <div className="w-10 h-10 bg-[var(--app-bg)] text-[var(--app-brand)] rounded-xl flex items-center justify-center mb-4 border border-[color:var(--app-border)]">
                             <Clock size={16} />
                         </div>
                         <h4 className="text-sm font-bold text-[var(--app-text)] uppercase tracking-wide mb-1.5">Instant Allocation</h4>
-                        <p className="text-[var(--app-muted)] text-xs leading-relaxed font-medium">Fast ticket actions designed to feel smooth and responsive across devices.</p>
+                        <p className="text-[var(--app-muted)] text-xs leading-relaxed font-medium">
+                            Fast ticket actions designed to feel smooth and responsive across devices.
+                        </p>
                     </div>
+
                     <div className="panel-surface p-6 shadow-md">
                         <div className="w-10 h-10 bg-[var(--app-bg)] text-[var(--app-brand)] rounded-xl flex items-center justify-center mb-4 border border-[color:var(--app-border)]">
                             <Sparkles size={16} />
                         </div>
                         <h4 className="text-sm font-bold text-[var(--app-text)] uppercase tracking-wide mb-1.5">Centralized Wallet</h4>
-                        <p className="text-[var(--app-muted)] text-xs leading-relaxed font-medium">Manage tickets, invoices, and bookings from one clean dashboard.</p>
+                        <p className="text-[var(--app-muted)] text-xs leading-relaxed font-medium">
+                            Manage tickets, invoices, and bookings from one clean dashboard.
+                        </p>
                     </div>
+
                     <div className="panel-surface p-6 shadow-md">
                         <div className="w-10 h-10 bg-[var(--app-bg)] text-[var(--app-brand)] rounded-xl flex items-center justify-center mb-4 border border-[color:var(--app-border)]">
                             <ShieldCheck size={16} />
                         </div>
                         <h4 className="text-sm font-bold text-[var(--app-text)] uppercase tracking-wide mb-1.5">Secure Booking</h4>
-                        <p className="text-[var(--app-muted)] text-xs leading-relaxed font-medium">OTP verification and protected booking flow keep transactions safer.</p>
+                        <p className="text-[var(--app-muted)] text-xs leading-relaxed font-medium">
+                            OTP verification and protected booking flow keep transactions safer.
+                        </p>
                     </div>
                 </div>
 
-                {/* Presentation Header Block */}
+                {/* Header */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 border-b border-[color:var(--app-border)] pb-5">
                     <div>
                         <h2 className="text-xl font-bold tracking-wider uppercase text-[var(--app-text)]">Upcoming Experiences</h2>
-                        <p className="text-xs text-[var(--app-muted)] mt-0.5 font-medium">Explore events with a cleaner palette and smoother visual hierarchy.</p>
+                        <p className="text-xs text-[var(--app-muted)] mt-0.5 font-medium">
+                            Explore events with a cleaner palette and smoother visual hierarchy.
+                        </p>
                     </div>
+
                     <div className="bg-[var(--app-surface)] text-[var(--app-brand)] px-3 py-1.5 rounded-xl text-[10px] font-black tracking-wider uppercase border border-[color:var(--app-border)] font-mono">
                         {events.length} LIVE EVENTS
                     </div>
                 </div>
 
-                {/* Content Grid */}
+                {/* Events */}
                 {loading ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-pulse">
                         {[1, 2, 3].map((n) => (
-                            <div key={n} className="h-96 bg-[#3D352E]/40 rounded-2xl border border-[#8C7A6B]/30" />
+                            <div
+                                key={n}
+                                className="h-96 rounded-2xl border border-[color:var(--app-border)] bg-[var(--app-surface)]/50"
+                            />
                         ))}
                     </div>
                 ) : events.length === 0 ? (
                     <div className="text-center py-20 panel-surface border-dashed flex flex-col items-center justify-center p-6">
                         <AlertCircle className="text-[var(--app-brand)] mb-3" size={32} />
-                        <p className="text-[var(--app-muted)] text-xs font-bold uppercase tracking-wider">No events matching the selected criteria were found.</p>
+                        <p className="text-[var(--app-muted)] text-xs font-bold uppercase tracking-wider">
+                            No events matching the selected criteria were found.
+                        </p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {events.map((event) => (
-                            <motion.div 
+                            <motion.div
                                 key={event._id}
                                 layout
                                 initial={{ opacity: 0 }}
@@ -258,12 +284,17 @@ const Home = () => {
                             >
                                 <div className="relative w-full aspect-video sm:aspect-[16/10] lg:aspect-[16/9] bg-[var(--app-bg)] overflow-hidden border-b border-[color:var(--app-border)]">
                                     {event.image ? (
-                                        <img src={event.image} alt={event.title} className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 group-hover:brightness-110 grayscale-[15%] sepia-[10%]" />
+                                        <img
+                                            src={event.image}
+                                            alt={event.title}
+                                            className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 group-hover:brightness-110 grayscale-[15%] sepia-[10%]"
+                                        />
                                     ) : (
-                                        <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-[#2B2621] text-[#8C7A6B] font-black text-[10px] uppercase tracking-widest">
+                                        <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-[var(--app-surface-soft)] text-[var(--app-brand)] font-black text-[10px] uppercase tracking-widest">
                                             {event.category || 'Curated'}
                                         </div>
                                     )}
+
                                     <div className="absolute top-3 right-3 bg-[var(--app-bg)]/90 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-mono font-bold border border-[color:var(--app-border)] z-10">
                                         {event.ticketPrice === 0 ? (
                                             <span className="text-emerald-500 font-black text-[9px] tracking-wider">FREE ACCESS</span>
@@ -271,23 +302,36 @@ const Home = () => {
                                             <span className="text-[var(--app-text)] font-black">₹{event.ticketPrice}</span>
                                         )}
                                     </div>
+
                                     <div className="absolute bottom-3 left-3 bg-[var(--app-button)] text-[var(--app-button-text)] text-[9px] font-black px-2.5 py-0.5 rounded uppercase tracking-widest z-10">
                                         {event.category || 'General'}
                                     </div>
                                 </div>
-                                
+
                                 <div className="p-5 flex-grow flex flex-col justify-between space-y-4 bg-[var(--app-surface)]/25">
                                     <div>
-                                        <h3 className="text-base font-bold text-[var(--app-text)] line-clamp-1 group-hover:text-[var(--app-brand)] transition-colors tracking-wide">{event.title}</h3>
-                                        
+                                        <h3 className="text-base font-bold text-[var(--app-text)] line-clamp-1 group-hover:text-[var(--app-brand)] transition-colors tracking-wide">
+                                            {event.title}
+                                        </h3>
+
                                         <div className="space-y-1.5 mt-3 text-[var(--app-muted)] text-xs font-semibold">
                                             <div className="flex items-center gap-2">
                                                 <Calendar size={13} className="text-[var(--app-brand)]" />
-                                                <span className="text-[11px]">{new Date(event.date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                                                <span className="text-[11px]">
+                                                    {new Date(event.date).toLocaleDateString(undefined, {
+                                                        weekday: 'short',
+                                                        month: 'short',
+                                                        day: 'numeric',
+                                                        year: 'numeric'
+                                                    })}
+                                                </span>
                                             </div>
+
                                             <div className="flex items-center gap-2">
                                                 <MapPin size={13} className="text-[var(--app-brand)]" />
-                                                <span className="truncate text-[11px] text-[var(--app-muted)]">{event.location}</span>
+                                                <span className="truncate text-[11px] text-[var(--app-muted)]">
+                                                    {event.location}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -297,15 +341,16 @@ const Home = () => {
                                             <span>{event.availableSeats} open entries</span>
                                             <span>Cap: {event.totalSeats}</span>
                                         </div>
+
                                         <div className="w-full bg-[var(--app-bg)] rounded-full h-1.5 mb-4 overflow-hidden border border-[color:var(--app-border)]">
-                                            <div 
-                                                className="bg-[var(--app-accent)] h-full rounded-full transition-all duration-500" 
+                                            <div
+                                                className="bg-[var(--app-accent)] h-full rounded-full transition-all duration-500"
                                                 style={{ width: `${Math.min(100, Math.max(0, (event.availableSeats / event.totalSeats) * 100))}%` }}
                                             />
                                         </div>
-                                        
-                                        <Link 
-                                            to={`/events/${event._id}`} 
+
+                                        <Link
+                                            to={`/events/${event._id}`}
                                             className="w-full text-center py-2.5 bg-[var(--app-button)] border border-transparent text-[var(--app-button-text)] font-bold rounded-xl text-xs uppercase tracking-wider hover:opacity-90 flex items-center justify-center gap-1.5 transition-all shadow-inner"
                                         >
                                             Request Access <ArrowRight size={12} />
@@ -317,21 +362,23 @@ const Home = () => {
                     </div>
                 )}
 
-                {/* Footer Layer */}
+                {/* Footer */}
                 <footer className="mt-24 pt-12 pb-6 border-t border-[color:var(--app-border)] text-center space-y-6">
                     <div className="flex justify-center items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-[var(--app-muted)]">
                         <Link to="/about" className="hover:text-[var(--app-brand)] transition-colors">About Us</Link>
                         <Link to="/contact" className="hover:text-[var(--app-brand)] transition-colors">Contact Support</Link>
                         <Link to="/terms" className="hover:text-[var(--app-brand)] transition-colors">Legal Matrix</Link>
                     </div>
-                    
+
                     <div className="space-y-1">
-                        <p className="text-sm font-black uppercase tracking-widest text-[var(--app-text)]">Book<span className="text-[var(--app-accent)]">IT</span></p>
+                        <p className="text-sm font-black uppercase tracking-widest text-[var(--app-text)]">
+                            Book<span className="text-[var(--app-accent)]">IT</span>
+                        </p>
                         <p className="text-[var(--app-muted)] text-xs max-w-xs mx-auto leading-relaxed font-medium">
                             Secure event discovery and booking with a refreshed premium palette.
                         </p>
                     </div>
-                    
+
                     <div className="text-[9px] text-[var(--app-muted)] font-bold uppercase tracking-widest pt-4 font-mono">
                         &copy; {new Date().getFullYear()} BookIT. All rights reserved.
                     </div>
