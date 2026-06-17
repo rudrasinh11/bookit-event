@@ -5,66 +5,74 @@
 @tailwind utilities;
 
 /* ============================================================
-   BOOKIT HIGH-END EARTHY DESIGN SYSTEM — CUSTOM TOKENS
+   BOOKIT DESIGN SYSTEM
+   Palette chosen:
+   Light  : #F5F5F5 #DFF1F1 #BBD5DA #FF0000
+   Dark   : #121212 #1C1C1C #24343A #FF0000
    ============================================================ */
 :root {
-  --color-canvas-bg: #F7F0E8;
-  --color-card-bg: #FFF8F1;
-  --color-brand-primary: #A32A2A;
-  --color-text-main: #2B2621;
-  --color-border-muted: rgba(93, 78, 66, 0.18);
+  --color-canvas-bg: #F5F5F5;
+  --color-card-bg: #DFF1F1;
+  --color-brand-primary: #FF0000;
+  --color-text-main: #121212;
+  --color-border-muted: rgba(36, 52, 58, 0.18);
 
-  --app-bg: #F7F0E8;
-  --app-surface: #FFF8F1;
-  --app-surface-soft: #EFE3D6;
-  --app-text: #2B2621;
-  --app-muted: #6E6257;
-  --app-border: rgba(93, 78, 66, 0.18);
-  --app-input: #FFF8F1;
-  --app-button: #2B2621;
-  --app-button-text: #F7F0E8;
-  --app-accent: #A32A2A;
+  --app-bg: #F5F5F5;
+  --app-surface: #DFF1F1;
+  --app-surface-soft: #BBD5DA;
+  --app-text: #121212;
+  --app-muted: #4B5A5F;
+  --app-border: rgba(36, 52, 58, 0.18);
+  --app-input: #F9FFFF;
+  --app-button: #FF0000;
+  --app-button-text: #FFFFFF;
+  --app-accent: #FF0000;
+  --app-brand: #24343A;
 
-  /* Status Configurations */
-  --color-success:        #15803d;
-  --color-warning:        #b45309;
-  --color-danger:         #991b0f;
-  --color-info:           #1d4ed8;
+  --color-success: #15803d;
+  --color-warning: #b45309;
+  --color-danger: #dc2626;
+  --color-info: #1d4ed8;
 
-  /* Typography Infrastructure */
-  --font-primary:         'Poppins', sans-serif;
-  --font-secondary:       'Inter', sans-serif;
+  --font-primary: 'Poppins', sans-serif;
+  --font-secondary: 'Inter', sans-serif;
 
-  /* Geometric Curves */
-  --radius-sm:            8px;
-  --radius-md:            12px;
-  --radius-lg:            16px;
-  --radius-xl:            20px;
-  --radius-2xl:           24px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
 }
 
 html.dark {
-  --color-canvas-bg: #2B2621;
-  --color-card-bg: #3D352E;
-  --color-brand-primary: #A32A2A;
-  --color-text-main: #F4EFEA;
-  --color-border-muted: rgba(140, 122, 107, 0.3);
+  --color-canvas-bg: #121212;
+  --color-card-bg: #1C1C1C;
+  --color-brand-primary: #FF0000;
+  --color-text-main: #F5F5F5;
+  --color-border-muted: rgba(187, 213, 218, 0.16);
 
-  --app-bg: #2B2621;
-  --app-surface: #3D352E;
-  --app-surface-soft: #4A4037;
-  --app-text: #F4EFEA;
-  --app-muted: #CBBFB4;
-  --app-border: rgba(140, 122, 107, 0.3);
-  --app-input: #2F2823;
-  --app-button: #F4EFEA;
-  --app-button-text: #2B2621;
-  --app-accent: #8C7A6B;
+  --app-bg: #121212;
+  --app-surface: #1C1C1C;
+  --app-surface-soft: #24343A;
+  --app-text: #F5F5F5;
+  --app-muted: #BBD5DA;
+  --app-border: rgba(187, 213, 218, 0.16);
+  --app-input: #202020;
+  --app-button: #FF0000;
+  --app-button-text: #FFFFFF;
+  --app-accent: #FF0000;
+  --app-brand: #BBD5DA;
 }
 
 /* ============================================================
-   CORE SYSTEM BASE RESETS
+   BASE
    ============================================================ */
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
 body {
   margin: 0;
   font-family: var(--font-secondary);
@@ -76,31 +84,48 @@ body {
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-primary);
   color: var(--color-text-main);
   font-weight: 700;
 }
 
-/* Custom Fine Scrollbar matching the Vintage Palette */
-::-webkit-scrollbar { 
-  width: 8px; 
-  height: 8px; 
+a {
+  color: inherit;
+  text-decoration: none;
 }
-::-webkit-scrollbar-track { 
-  background: var(--color-canvas-bg); 
+
+::selection {
+  background: color-mix(in srgb, var(--app-accent) 22%, transparent);
+  color: var(--app-text);
 }
-::-webkit-scrollbar-thumb { 
-  background: var(--color-card-bg); 
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-canvas-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--app-surface-soft);
   border-radius: 999px;
   border: 2px solid var(--color-canvas-bg);
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-border-muted);
+  background: var(--app-brand);
 }
 
 /* ============================================================
-   COMPONENT ARCHITECTURE LAYER
+   COMPONENT LAYER
    ============================================================ */
 @layer components {
   .page-shell {
@@ -114,15 +139,22 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .panel-surface {
-    background: color-mix(in srgb, var(--app-surface) 94%, transparent);
+    background: color-mix(in srgb, var(--app-surface) 92%, transparent);
     border: 1px solid var(--app-border);
     color: var(--app-text);
     box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
     @apply rounded-2xl backdrop-blur-sm;
   }
 
+  .panel-surface-strong {
+    background: var(--app-surface);
+    border: 1px solid var(--app-border);
+    color: var(--app-text);
+    @apply rounded-2xl;
+  }
+
   .input-surface {
-    background: color-mix(in srgb, var(--app-bg) 72%, var(--app-surface) 28%);
+    background: color-mix(in srgb, var(--app-input) 84%, var(--app-surface) 16%);
     border: 1px solid var(--app-border);
     color: var(--app-text);
     @apply rounded-xl outline-none transition-all duration-200;
@@ -134,13 +166,18 @@ h1, h2, h3, h4, h5, h6 {
 
   .input-surface:focus {
     border-color: var(--app-accent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--app-accent) 20%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--app-accent) 18%, transparent);
   }
 
   .btn-surface {
     @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 active:scale-[0.98];
     background: var(--app-button);
     color: var(--app-button-text);
+  }
+
+  .btn-surface:hover {
+    filter: brightness(0.96);
+    box-shadow: 0 10px 24px rgba(255, 0, 0, 0.18);
   }
 
   .btn-surface-secondary {
@@ -150,12 +187,44 @@ h1, h2, h3, h4, h5, h6 {
     border: 1px solid var(--app-border);
   }
 
+  .btn-surface-secondary:hover {
+    background: color-mix(in srgb, var(--app-surface-soft) 60%, white 40%);
+  }
+
   .section-eyebrow {
     @apply text-[10px] font-black uppercase tracking-[0.28em];
     color: var(--app-accent);
   }
 
-  /* Dynamic Premium Button Core Blueprint */
+  .chip-surface {
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-wider;
+    background: color-mix(in srgb, var(--app-surface-soft) 60%, transparent);
+    color: var(--app-brand);
+    border: 1px solid var(--app-border);
+  }
+
+  .badge-success {
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-wider;
+    background: rgba(22, 163, 74, 0.12);
+    color: #16a34a;
+    border: 1px solid rgba(22, 163, 74, 0.22);
+  }
+
+  .badge-danger {
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-wider;
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.22);
+  }
+
+  .badge-warning {
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-wider;
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.22);
+  }
+
+  /* Premium legacy helpers kept for compatibility */
   .btn-premium {
     @apply inline-flex items-center justify-center gap-2 font-semibold transition-all duration-300 cursor-pointer select-none active:scale-95;
     font-family: var(--font-primary);
@@ -163,82 +232,106 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .btn-premium-primary {
-    @apply btn-premium px-6 py-3 text-sm tracking-wide shadow-md text-[var(--color-canvas-bg)] bg-[var(--color-text-main)] border border-[var(--color-border-muted)];
+    @apply btn-premium px-6 py-3 text-sm tracking-wide shadow-md;
+    color: var(--app-button-text);
+    background: var(--app-button);
+    border: 1px solid transparent;
   }
+
   .btn-premium-primary:hover {
-    @apply text-[var(--color-text-main)] bg-[var(--color-brand-primary)] -translate-y-0.5;
-    box-shadow: 0 10px 20px rgba(163, 42, 42, 0.3);
+    filter: brightness(0.96);
   }
 
   .btn-premium-accent {
-    @apply btn-premium px-6 py-3 text-sm text-white tracking-wide shadow-md bg-[var(--color-brand-primary)];
+    @apply btn-premium px-6 py-3 text-sm tracking-wide shadow-md;
+    color: #fff;
+    background: var(--app-accent);
   }
+
   .btn-premium-accent:hover {
-    @apply opacity-95 -translate-y-0.5;
-    box-shadow: 0 10px 20px rgba(163, 42, 42, 0.4);
+    filter: brightness(0.96);
   }
 
   .btn-premium-secondary {
-    @apply btn-premium px-6 py-3 text-sm text-[var(--color-text-main)] bg-transparent border-2 border-[var(--color-text-main)];
-  }
-  .btn-premium-secondary:hover {
-    @apply bg-[var(--color-text-main)] text-[var(--color-canvas-bg)];
+    @apply btn-premium px-6 py-3 text-sm;
+    color: var(--app-text);
+    background: transparent;
+    border: 2px solid var(--app-border);
   }
 
-  /* Architectural Layout Cards */
+  .btn-premium-secondary:hover {
+    background: var(--app-surface-soft);
+  }
+
   .card-premium {
-    background: var(--color-card-bg);
+    background: var(--app-surface);
     border-radius: var(--radius-xl);
-    border: 1px solid rgba(140, 122, 107, 0.3);
-    box-shadow: 0 10px 30px rgba(43, 38, 33, 0.3);
+    border: 1px solid var(--app-border);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
     @apply transition-all duration-300;
   }
+
   .card-premium:hover {
-    @apply -translate-y-1.5;
-    box-shadow: 0 20px 40px rgba(43, 38, 33, 0.5);
+    @apply -translate-y-1;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
   }
 
-  /* Premium Form Controls */
   .input-premium {
-    @apply w-full px-4 py-3 outline-none transition-all duration-200 border text-sm text-[var(--color-text-main)] bg-[var(--color-canvas-bg)]/60 border-[var(--color-border-muted)]/40;
-    border-radius: var(--radius-md);
-  }
-  .input-premium:focus {
-    @apply bg-[var(--color-card-bg)] border-[var(--color-brand-primary)];
-    box-shadow: 0 0 0 3px rgba(163, 42, 42, 0.25);
+    @apply w-full px-4 py-3 outline-none transition-all duration-200 border text-sm rounded-xl;
+    color: var(--app-text);
+    background: var(--app-input);
+    border-color: var(--app-border);
   }
 
-  /* Modern Premium Badges */
+  .input-premium:focus {
+    border-color: var(--app-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--app-accent) 18%, transparent);
+  }
+
   .badge-premium {
     @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider;
   }
 
-  /* Dashboard Framework Components */
   .panel-sidebar-item {
-    @apply flex items-center gap-3.5 px-4 py-3.5 rounded-xl font-medium text-sm transition-all duration-200 w-full text-left cursor-pointer text-[var(--color-text-main)]/80;
-  }
-  .panel-sidebar-item:hover, .panel-sidebar-item.active {
-    @apply bg-[var(--color-brand-primary)] text-[var(--color-text-main)] font-semibold;
+    @apply flex items-center gap-3.5 px-4 py-3.5 rounded-xl font-medium text-sm transition-all duration-200 w-full text-left cursor-pointer;
+    color: color-mix(in srgb, var(--app-text) 82%, transparent);
   }
 
-  /* Structural Data Presentation Table */
-  .premium-table-container {
-    @apply w-full overflow-x-auto rounded-xl border border-[var(--color-border-muted)]/30 bg-[var(--color-card-bg)] shadow-xl;
+  .panel-sidebar-item:hover,
+  .panel-sidebar-item.active {
+    background: var(--app-button);
+    color: var(--app-button-text);
+    font-weight: 600;
   }
+
+  .premium-table-container {
+    @apply w-full overflow-x-auto rounded-xl shadow-xl;
+    border: 1px solid var(--app-border);
+    background: var(--app-surface);
+  }
+
   .premium-table {
     @apply w-full text-sm text-left border-collapse;
   }
+
   .premium-table th {
-    @apply px-5 py-4 font-bold uppercase text-xs tracking-wider bg-[var(--color-canvas-bg)]/80 text-[var(--color-text-main)];
-    border-bottom: 2px solid rgba(140, 122, 107, 0.3);
+    @apply px-5 py-4 font-bold uppercase text-xs tracking-wider;
+    background: color-mix(in srgb, var(--app-surface-soft) 55%, transparent);
+    color: var(--app-brand);
+    border-bottom: 1px solid var(--app-border);
   }
+
   .premium-table td {
-    @apply px-5 py-4 text-[var(--color-text-main)]/90 border-b border-[var(--color-border-muted)]/20;
+    @apply px-5 py-4;
+    color: color-mix(in srgb, var(--app-text) 92%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--app-border) 75%, transparent);
   }
-  .premium-table tr:last-child td { 
-    @apply border-b-0; 
+
+  .premium-table tr:last-child td {
+    @apply border-b-0;
   }
-  .premium-table tr:hover td { 
-    @apply bg-[var(--color-canvas-bg)]/40; 
+
+  .premium-table tr:hover td {
+    background: color-mix(in srgb, var(--app-surface-soft) 30%, transparent);
   }
 }

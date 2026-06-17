@@ -112,13 +112,13 @@ const Home = () => {
                 {/* Categories Matrix Selector */}
                 <div className="mb-8">
                     <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-2 text-[#F4EFEA]/80">
-                            <Layers size={14} className="text-[#8C7A6B]" />
+                        <div className="flex items-center gap-2 text-[var(--app-text)]/80">
+                            <Layers size={14} className="text-[var(--app-brand)]" />
                             <h3 className="text-[10px] font-bold uppercase tracking-widest">Curated Classifications</h3>
                         </div>
                         <button 
                             onClick={() => setShowAdvanced(!showAdvanced)}
-                            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-[#8C7A6B]/30 bg-[#3D352E]/30 text-[10px] font-bold uppercase tracking-widest text-[#F4EFEA]/80 hover:text-[#F4EFEA] transition-all shadow-sm"
+                            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-[color:var(--app-border)] bg-[var(--app-surface)]/30 text-[10px] font-bold uppercase tracking-widest text-[var(--app-muted)] hover:text-[var(--app-text)] transition-all shadow-sm"
                         >
                             <SlidersHorizontal size={12} /> Filter Engine <ChevronDown size={12} className={`transition-transform duration-200 ${showAdvanced ? 'rotate-180' : ''}`} />
                         </button>
@@ -149,42 +149,42 @@ const Home = () => {
                             exit={{ opacity: 0, height: 0 }}
                             className="overflow-hidden mb-10"
                         >
-                            <div className="bg-[#3D352E]/30 border border-[#8C7A6B]/30 p-5 rounded-2xl shadow-2xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div className="panel-surface p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                                 <div className="flex flex-col gap-1">
-                                    <label className="text-[9px] font-bold text-[#8C7A6B] uppercase tracking-widest">Target Venue / City</label>
+                                    <label className="text-[9px] font-bold text-[var(--app-brand)] uppercase tracking-widest">Target Venue / City</label>
                                     <input 
                                         type="text" 
                                         placeholder="e.g. Mumbai, Bangalore"
                                         value={city}
                                         onChange={(e) => setCity(e.target.value)}
-                                        className="w-full px-3 py-2 bg-[#2B2621]/60 border border-[#8C7A6B]/30 rounded-xl text-xs focus:outline-none text-zinc-200 placeholder-[#8C7A6B]/60 font-medium"
+                                        className="input-surface w-full px-3 py-2 text-xs font-medium"
                                     />
                                 </div>
                                 <div className="flex flex-col gap-1">
-                                    <label className="text-[9px] font-bold text-[#8C7A6B] uppercase tracking-widest">Price Ceiling Limit (₹)</label>
+                                    <label className="text-[9px] font-bold text-[var(--app-brand)] uppercase tracking-widest">Price Ceiling Limit (₹)</label>
                                     <input 
                                         type="number" 
                                         placeholder="Maximum budget threshold"
                                         value={maxPrice}
                                         onChange={(e) => setMaxPrice(e.target.value)}
-                                        className="w-full px-3 py-2 bg-[#2B2621]/60 border border-[#8C7A6B]/30 rounded-xl text-xs focus:outline-none text-zinc-200 placeholder-[#8C7A6B]/60 font-medium"
+                                        className="input-surface w-full px-3 py-2 text-xs font-medium"
                                     />
                                 </div>
                                 <div className="flex flex-col gap-1">
-                                    <label className="text-[9px] font-bold text-[#8C7A6B] uppercase tracking-widest">Calendar Date Target</label>
+                                    <label className="text-[9px] font-bold text-[var(--app-brand)] uppercase tracking-widest">Calendar Date Target</label>
                                     <input 
                                         type="date" 
                                         value={dateFilter}
                                         onChange={(e) => setDateFilter(e.target.value)}
-                                        className="w-full px-3 py-2 bg-[#2B2621]/60 border border-[#8C7A6B]/30 rounded-xl text-xs focus:outline-none text-zinc-400 font-medium"
+                                        className="input-surface w-full px-3 py-2 text-xs font-medium"
                                     />
                                 </div>
                                 <div className="flex flex-col gap-1">
-                                    <label className="text-[9px] font-bold text-[#8C7A6B] uppercase tracking-widest">Prioritize Sorting Order</label>
+                                    <label className="text-[9px] font-bold text-[var(--app-brand)] uppercase tracking-widest">Prioritize Sorting Order</label>
                                     <select 
                                         value={sortBy} 
                                         onChange={(e) => setSortBy(e.target.value)}
-                                        className="w-full px-3 py-2 bg-[#2B2621]/60 border border-[#8C7A6B]/30 rounded-xl text-xs focus:outline-none text-zinc-300 font-bold bg-[#2B2621]"
+                                        className="input-surface w-full px-3 py-2 text-xs font-bold"
                                     >
                                         <option value="popularity">Popularity Score Hierarchy</option>
                                         <option value="date">Timeline: Earliest First</option>
@@ -200,37 +200,37 @@ const Home = () => {
 
                 {/* Core Proposition Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-                    <div className="bg-[#3D352E]/20 border border-[#8C7A6B]/30 p-6 rounded-2xl shadow-md">
-                        <div className="w-10 h-10 bg-[#3D352E]/60 text-[#F4EFEA] rounded-xl flex items-center justify-center mb-4 border border-[#8C7A6B]/40">
+                    <div className="panel-surface p-6 shadow-md">
+                        <div className="w-10 h-10 bg-[var(--app-bg)] text-[var(--app-brand)] rounded-xl flex items-center justify-center mb-4 border border-[color:var(--app-border)]">
                             <Clock size={16} />
                         </div>
-                        <h4 className="text-sm font-bold text-[#F4EFEA]/90 uppercase tracking-wide mb-1.5">Instant Allocation</h4>
-                        <p className="text-[#F4EFEA]/70 text-xs leading-relaxed font-medium">High-frequency ticket clearing engine designed to securely settle transactions in millisecond frames.</p>
+                        <h4 className="text-sm font-bold text-[var(--app-text)] uppercase tracking-wide mb-1.5">Instant Allocation</h4>
+                        <p className="text-[var(--app-muted)] text-xs leading-relaxed font-medium">Fast ticket actions designed to feel smooth and responsive across devices.</p>
                     </div>
-                    <div className="bg-[#3D352E]/20 border border-[#8C7A6B]/30 p-6 rounded-2xl shadow-md">
-                        <div className="w-10 h-10 bg-[#3D352E]/60 text-[#F4EFEA] rounded-xl flex items-center justify-center mb-4 border border-[#8C7A6B]/40">
+                    <div className="panel-surface p-6 shadow-md">
+                        <div className="w-10 h-10 bg-[var(--app-bg)] text-[var(--app-brand)] rounded-xl flex items-center justify-center mb-4 border border-[color:var(--app-border)]">
                             <Sparkles size={16} />
                         </div>
-                        <h4 className="text-sm font-bold text-[#F4EFEA]/90 uppercase tracking-wide mb-1.5">Centralized Wallet</h4>
-                        <p className="text-[#F4EFEA]/70 text-xs leading-relaxed font-medium">Review credentials, download dynamic passes, or invoke automated registration parameters smoothly.</p>
+                        <h4 className="text-sm font-bold text-[var(--app-text)] uppercase tracking-wide mb-1.5">Centralized Wallet</h4>
+                        <p className="text-[var(--app-muted)] text-xs leading-relaxed font-medium">Manage tickets, invoices, and bookings from one clean dashboard.</p>
                     </div>
-                    <div className="bg-[#3D352E]/20 border border-[#8C7A6B]/30 p-6 rounded-2xl shadow-md">
-                        <div className="w-10 h-10 bg-[#3D352E]/60 text-[#F4EFEA] rounded-xl flex items-center justify-center mb-4 border border-[#8C7A6B]/40">
+                    <div className="panel-surface p-6 shadow-md">
+                        <div className="w-10 h-10 bg-[var(--app-bg)] text-[var(--app-brand)] rounded-xl flex items-center justify-center mb-4 border border-[color:var(--app-border)]">
                             <ShieldCheck size={16} />
                         </div>
-                        <h4 className="text-sm font-bold text-[#F4EFEA]/90 uppercase tracking-wide mb-1.5">Cryptographic Security</h4>
-                        <p className="text-[#F4EFEA]/70 text-xs leading-relaxed font-medium">Comprehensive secure transactions backed by modern configurations and mandatory OTP safeguards.</p>
+                        <h4 className="text-sm font-bold text-[var(--app-text)] uppercase tracking-wide mb-1.5">Secure Booking</h4>
+                        <p className="text-[var(--app-muted)] text-xs leading-relaxed font-medium">OTP verification and protected booking flow keep transactions safer.</p>
                     </div>
                 </div>
 
                 {/* Presentation Header Block */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 border-b border-[#8C7A6B]/30 pb-5">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 border-b border-[color:var(--app-border)] pb-5">
                     <div>
-                        <h2 className="text-xl font-bold tracking-wider uppercase text-zinc-100">Upcoming Experiences</h2>
-                        <p className="text-xs text-[#8C7A6B] mt-0.5 font-medium">Explore validated events cataloged under premium operational metrics.</p>
+                        <h2 className="text-xl font-bold tracking-wider uppercase text-[var(--app-text)]">Upcoming Experiences</h2>
+                        <p className="text-xs text-[var(--app-muted)] mt-0.5 font-medium">Explore events with a cleaner palette and smoother visual hierarchy.</p>
                     </div>
-                    <div className="bg-[#3D352E] text-zinc-300 px-3 py-1.5 rounded-xl text-[10px] font-black tracking-wider uppercase border border-[#8C7A6B]/40 font-mono">
-                        {events.length} AVAILABILITIES RESERVED
+                    <div className="bg-[var(--app-surface)] text-[var(--app-brand)] px-3 py-1.5 rounded-xl text-[10px] font-black tracking-wider uppercase border border-[color:var(--app-border)] font-mono">
+                        {events.length} LIVE EVENTS
                     </div>
                 </div>
 
@@ -242,9 +242,9 @@ const Home = () => {
                         ))}
                     </div>
                 ) : events.length === 0 ? (
-                    <div className="text-center py-20 bg-[#3D352E]/10 rounded-2xl border border-dashed border-[#8C7A6B]/30 flex flex-col items-center justify-center p-6">
-                        <AlertCircle className="text-zinc-700 mb-3" size={32} />
-                        <p className="text-zinc-500 text-xs font-bold uppercase tracking-wider">No events matching the selected criteria were found in our directory.</p>
+                    <div className="text-center py-20 panel-surface border-dashed flex flex-col items-center justify-center p-6">
+                        <AlertCircle className="text-[var(--app-brand)] mb-3" size={32} />
+                        <p className="text-[var(--app-muted)] text-xs font-bold uppercase tracking-wider">No events matching the selected criteria were found.</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -254,9 +254,9 @@ const Home = () => {
                                 layout
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="flex flex-col rounded-2xl overflow-hidden bg-[#3D352E]/20 border border-[#8C7A6B]/30 shadow-xl transition-all group hover:border-[#8C7A6B]"
+                                className="flex flex-col rounded-2xl overflow-hidden panel-surface shadow-xl transition-all group hover:border-[var(--app-brand)]"
                             >
-                                <div className="relative w-full aspect-video sm:aspect-[16/10] lg:aspect-[16/9] bg-[#2B2621] overflow-hidden border-b border-[#8C7A6B]/30">
+                                <div className="relative w-full aspect-video sm:aspect-[16/10] lg:aspect-[16/9] bg-[var(--app-bg)] overflow-hidden border-b border-[color:var(--app-border)]">
                                     {event.image ? (
                                         <img src={event.image} alt={event.title} className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 group-hover:brightness-110 grayscale-[15%] sepia-[10%]" />
                                     ) : (
@@ -264,49 +264,49 @@ const Home = () => {
                                             {event.category || 'Curated'}
                                         </div>
                                     )}
-                                    <div className="absolute top-3 right-3 bg-[#2B2621]/90 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-mono font-bold border border-[#8C7A6B]/40 z-10">
+                                    <div className="absolute top-3 right-3 bg-[var(--app-bg)]/90 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-mono font-bold border border-[color:var(--app-border)] z-10">
                                         {event.ticketPrice === 0 ? (
                                             <span className="text-emerald-500 font-black text-[9px] tracking-wider">FREE ACCESS</span>
                                         ) : (
-                                            <span className="text-[#F4EFEA] font-black">₹{event.ticketPrice}</span>
+                                            <span className="text-[var(--app-text)] font-black">₹{event.ticketPrice}</span>
                                         )}
                                     </div>
-                                    <div className="absolute bottom-3 left-3 bg-[#F4EFEA] text-[#2B2621] text-[9px] font-black px-2.5 py-0.5 rounded uppercase tracking-widest z-10">
+                                    <div className="absolute bottom-3 left-3 bg-[var(--app-button)] text-[var(--app-button-text)] text-[9px] font-black px-2.5 py-0.5 rounded uppercase tracking-widest z-10">
                                         {event.category || 'General'}
                                     </div>
                                 </div>
                                 
-                                <div className="p-5 flex-grow flex flex-col justify-between space-y-4 bg-[#3D352E]/10">
+                                <div className="p-5 flex-grow flex flex-col justify-between space-y-4 bg-[var(--app-surface)]/25">
                                     <div>
-                                        <h3 className="text-base font-bold text-zinc-200 line-clamp-1 group-hover:text-zinc-50 transition-colors tracking-wide">{event.title}</h3>
+                                        <h3 className="text-base font-bold text-[var(--app-text)] line-clamp-1 group-hover:text-[var(--app-brand)] transition-colors tracking-wide">{event.title}</h3>
                                         
-                                        <div className="space-y-1.5 mt-3 text-[#F4EFEA]/70 text-xs font-semibold">
+                                        <div className="space-y-1.5 mt-3 text-[var(--app-muted)] text-xs font-semibold">
                                             <div className="flex items-center gap-2">
-                                                <Calendar size={13} className="text-zinc-500" />
+                                                <Calendar size={13} className="text-[var(--app-brand)]" />
                                                 <span className="text-[11px]">{new Date(event.date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</span>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <MapPin size={13} className="text-zinc-500" />
-                                                <span className="truncate text-[11px] text-[#F4EFEA]/70">{event.location}</span>
+                                                <MapPin size={13} className="text-[var(--app-brand)]" />
+                                                <span className="truncate text-[11px] text-[var(--app-muted)]">{event.location}</span>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="pt-4 border-t border-[#8C7A6B]/30">
-                                        <div className="flex justify-between items-center text-[10px] font-mono font-bold text-zinc-500 mb-1.5">
+                                    <div className="pt-4 border-t border-[color:var(--app-border)]">
+                                        <div className="flex justify-between items-center text-[10px] font-mono font-bold text-[var(--app-muted)] mb-1.5">
                                             <span>{event.availableSeats} open entries</span>
                                             <span>Cap: {event.totalSeats}</span>
                                         </div>
-                                        <div className="w-full bg-[#2B2621] rounded-full h-1.5 mb-4 overflow-hidden border border-[#8C7A6B]/20">
+                                        <div className="w-full bg-[var(--app-bg)] rounded-full h-1.5 mb-4 overflow-hidden border border-[color:var(--app-border)]">
                                             <div 
-                                                className="bg-zinc-300 h-full rounded-full transition-all duration-500" 
+                                                className="bg-[var(--app-accent)] h-full rounded-full transition-all duration-500" 
                                                 style={{ width: `${Math.min(100, Math.max(0, (event.availableSeats / event.totalSeats) * 100))}%` }}
                                             />
                                         </div>
                                         
                                         <Link 
                                             to={`/events/${event._id}`} 
-                                            className="w-full text-center py-2.5 bg-[#2B2621] border border-[#8C7A6B]/40 text-zinc-300 font-bold rounded-xl text-xs uppercase tracking-wider hover:bg-[#F4EFEA] hover:text-[#2B2621] flex items-center justify-center gap-1.5 transition-all shadow-inner"
+                                            className="w-full text-center py-2.5 bg-[var(--app-button)] border border-transparent text-[var(--app-button-text)] font-bold rounded-xl text-xs uppercase tracking-wider hover:opacity-90 flex items-center justify-center gap-1.5 transition-all shadow-inner"
                                         >
                                             Request Access <ArrowRight size={12} />
                                         </Link>
@@ -318,22 +318,22 @@ const Home = () => {
                 )}
 
                 {/* Footer Layer */}
-                <footer className="mt-24 pt-12 pb-6 border-t border-[#8C7A6B]/30 text-center space-y-6">
-                    <div className="flex justify-center items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-[#F4EFEA]/80">
-                        <Link to="/about" className="hover:text-[#F4EFEA] transition-colors">About Us</Link>
-                        <Link to="/contact" className="hover:text-[#F4EFEA] transition-colors">Contact Support</Link>
-                        <Link to="/terms" className="hover:text-[#F4EFEA] transition-colors">Legal Matrix</Link>
+                <footer className="mt-24 pt-12 pb-6 border-t border-[color:var(--app-border)] text-center space-y-6">
+                    <div className="flex justify-center items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-[var(--app-muted)]">
+                        <Link to="/about" className="hover:text-[var(--app-brand)] transition-colors">About Us</Link>
+                        <Link to="/contact" className="hover:text-[var(--app-brand)] transition-colors">Contact Support</Link>
+                        <Link to="/terms" className="hover:text-[var(--app-brand)] transition-colors">Legal Matrix</Link>
                     </div>
                     
                     <div className="space-y-1">
-                        <p className="text-sm font-black uppercase tracking-widest text-zinc-300">Book<span className="text-zinc-600">IT</span></p>
-                        <p className="text-zinc-500 text-xs max-w-xs mx-auto leading-relaxed font-medium">
-                            An institutional-grade transactional interface architectural stack designed to host and book local events securely.
+                        <p className="text-sm font-black uppercase tracking-widest text-[var(--app-text)]">Book<span className="text-[var(--app-accent)]">IT</span></p>
+                        <p className="text-[var(--app-muted)] text-xs max-w-xs mx-auto leading-relaxed font-medium">
+                            Secure event discovery and booking with a refreshed premium palette.
                         </p>
                     </div>
                     
-                    <div className="text-[9px] text-zinc-600 font-bold uppercase tracking-widest pt-4 font-mono">
-                        &copy; {new Date().getFullYear()} BookIT Inc. Distributed Architecture. All rights reserved.
+                    <div className="text-[9px] text-[var(--app-muted)] font-bold uppercase tracking-widest pt-4 font-mono">
+                        &copy; {new Date().getFullYear()} BookIT. All rights reserved.
                     </div>
                 </footer>
 
