@@ -192,12 +192,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
                     <div className="flex items-center justify-between h-20">
                         <Link to="/" className="flex items-center h-full py-2 select-none min-w-0 flex-1 md:flex-none">
                             <div className="h-12 sm:h-14 w-full max-w-[230px] sm:max-w-[240px] md:w-56 bg-[var(--app-button)] border border-[color:var(--app-border)] rounded-xl px-3 sm:px-4 flex items-center justify-center gap-2 sm:gap-3 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-md overflow-hidden">
-                                <img
-                                    src={logoImg}
-                                    alt="BookIT"
-                                    className="h-8 sm:h-10 w-8 sm:w-10 object-contain"
-                                />
-                                <span className="text-xl sm:text-2xl font-black tracking-[0.18em] sm:tracking-widest uppercase text-[var(--app-button-text)] font-sans leading-none">
+                          <span className="text-xl sm:text-2xl font-black tracking-[0.18em] sm:tracking-widest uppercase text-[var(--app-button-text)] font-sans leading-none">
                                     Book<span className="text-white">IT</span>
                                 </span>
                             </div>
